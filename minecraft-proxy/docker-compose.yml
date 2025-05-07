@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    image: nginx:latest
+    container_name: minecraft-proxy
+    ports:
+      # Java Edition port
+      - "25565:25565/tcp"
+      - "25565:25565/udp"
+      # Bedrock Edition port
+      - "19132:19132/udp"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always
