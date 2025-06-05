@@ -1,5 +1,5 @@
 #!/bin/bash
-source secrets
+source ~/minecraft-proxy-updater/secrets
 
 # VPS details
 VPS_IP="$SECRET_VPS_IP"
