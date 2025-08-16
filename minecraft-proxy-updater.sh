@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/minecraft-proxy-updater/secrets
+source ~/util/minecraft-proxy-updater/secrets
 
 # VPS details
 VPS_IP="$SECRET_VPS_IP"
@@ -11,7 +11,7 @@ NGINX_CONF="/home/$VPS_USER/minecraft-proxy/nginx.conf"
 DOCKER_COMPOSE_DIR="/home/$VPS_USER/minecraft-proxy"
 
 # Local Files
-SCRIPT_DIR="/users/Chris/minecraft-proxy-updater"
+SCRIPT_DIR="/users/Chris/util/minecraft-proxy-updater"
 
 # Log file
 LOG_FILE="$SCRIPT_DIR/minecraft-proxy-updater.log"
@@ -108,5 +108,3 @@ if [ "$NEW_IP" != "$LAST_IP" ]; then
 else
   log_message "IPv4 unchanged ($NEW_IP)"
 fi
-
-exit 0
