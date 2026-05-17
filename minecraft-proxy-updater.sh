@@ -1,21 +1,13 @@
 #!/bin/bash
-source ~/util/minecraft-proxy-updater/secrets
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "$SCRIPT_DIR/config"
+source "$SECRETS_FILE"
 
 # VPS details
 VPS_IP="$SECRET_VPS_IP"
 VPS_USER="$SECRET_VPS_USER"
 SSH_KEY="$SECRET_SSH_KEY"
-
-# Files on VPS
-NGINX_CONF="/home/$VPS_USER/minecraft-proxy/nginx.conf"
-DOCKER_COMPOSE_DIR="/home/$VPS_USER/minecraft-proxy"
-
-# Local Files
-SCRIPT_DIR="/users/Chris/util/minecraft-proxy-updater"
-
-# Log file
-LOG_FILE="$SCRIPT_DIR/minecraft-proxy-updater.log"
-IP_FILE="$SCRIPT_DIR/current-ip"
 
 # Function to log messages
 log_message() {

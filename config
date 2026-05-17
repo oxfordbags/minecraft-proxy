@@ -1,0 +1,10 @@
+# Path to secrets file (VPS_IP, VPS_USER, SSH_KEY)
+SECRETS_FILE="$SCRIPT_DIR/secrets"
+
+# Paths on the VPS
+NGINX_CONF="/home/chris/minecraft-proxy/nginx.conf"
+DOCKER_COMPOSE_DIR="/home/chris/minecraft-proxy"
+
+# Local paths (default to script directory)
+LOG_FILE="$HOME/homelab/logs/minecraft-proxy-updater.log"
+IP_FILE="$SCRIPT_DIR/current-ip"
