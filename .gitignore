@@ -1,3 +1,2 @@
-minecraft-proxy-updater.log
-secrets
-current-ip
+minecraft-proxy/.env
+.DS_Store

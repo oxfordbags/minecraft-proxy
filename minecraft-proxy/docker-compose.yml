@@ -1,15 +1,17 @@
-version: '3'
-
 services:
-  nginx-proxy:
+  minecraft-proxy:
     image: nginx:latest
     container_name: minecraft-proxy
-    ports:
-      # Java Edition port
-      - "25565:25565/tcp"
-      - "25565:25565/udp"
-      # Bedrock Edition port
-      - "19132:19132/udp"
+    # Host networking so the container binds the game ports directly and can
+    # reach the backend over the Tailscale interface without extra plumbing.
+    network_mode: host
+    environment:
+      # BACKEND_IP comes from .env (copy .env.example). The nginx entrypoint
+      # renders templates/*.template through envsubst; NGINX_ENVSUBST_FILTER
+      # limits substitution to our BACKEND_ vars so no nginx $variables break.
+      - BACKEND_IP=${BACKEND_IP:?set BACKEND_IP in .env (see .env.example)}
+      - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
+      - NGINX_ENVSUBST_FILTER=BACKEND_
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./templates:/etc/nginx/templates:ro
     restart: always
