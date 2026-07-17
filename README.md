@@ -35,9 +35,10 @@ tailnet — the real home IP appears nowhere on the VPS.
    curl -fsSL https://get.docker.com | sh
    ```
 
-4. **Deploy the proxy.** Copy the `minecraft-proxy/` directory to the VPS, set the
-   backend address, and start it:
+4. **Deploy the proxy.** Clone this repo onto the VPS, set the backend address,
+   and start it:
    ```bash
+   git clone git@github.com:oxfordbags/minecraft-proxy.git
    cd minecraft-proxy
    cp .env.example .env        # then edit BACKEND_IP if the backend isn't home-server
    docker compose up -d
