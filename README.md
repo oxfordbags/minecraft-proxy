@@ -4,14 +4,14 @@ A tiny nginx TCP/UDP proxy that fronts a home Minecraft server behind a VPS, so
 players connect to a public domain and never see the home network's IP address.
 Works for both Java and Bedrock servers.
 
-The home server (`home-server`) reaches the VPS over [Tailscale](https://tailscale.com),
-so the proxy points at a **stable tailnet IP that never changes** — no dynamic-DNS
-or IP-update tooling is required, and the home router needs no port forwarding.
+The home server reaches the VPS over [Tailscale](https://tailscale.com), so the
+proxy points at a **stable tailnet IP that never changes** — no dynamic-DNS or
+IP-update tooling is required, and the home router needs no port forwarding.
 
 ## How it works
 
 ```
-player ──▶ your.domain ──▶ VPS (public IP) ──▶ nginx ──▶ 100.64.0.1 (home-server, over Tailscale)
+player ──▶ your.domain ──▶ VPS (public IP) ──▶ nginx ──▶ home server (over Tailscale)
 ```
 
 Players only ever see the VPS IP. The backend address (set via `.env`, see below)
@@ -28,7 +28,7 @@ tailnet — the real home IP appears nowhere on the VPS.
    sudo tailscale up
    ```
    Approve the new node in the Tailscale admin console. Confirm it can reach the
-   home server: `tailscale ping home-server`.
+   home server: `tailscale ping <home-server>`.
 
 3. **Install Docker** on the VPS if needed:
    ```bash
@@ -38,15 +38,15 @@ tailnet — the real home IP appears nowhere on the VPS.
 4. **Deploy the proxy.** Clone this repo onto the VPS, set the backend address,
    and start it:
    ```bash
-   git clone git@github.com:oxfordbags/minecraft-proxy.git
+   git clone <this-repo-url>
    cd minecraft-proxy
-   cp .env.example .env        # then edit BACKEND_IP if the backend isn't home-server
+   cp .env.example .env        # then set BACKEND_IP to the home server's Tailscale IP
    docker compose up -d
    ```
-   `BACKEND_IP` is the backend server's stable Tailscale IP (`tailscale ip -4` on
-   that machine). nginx renders `templates/nginx.conf.template` with this value at
-   startup, so nothing is hardcoded. If the IP ever changes, edit `.env` and re-run
-   `docker compose up -d`.
+   `BACKEND_IP` is the backend server's stable Tailscale IP (run `tailscale ip -4`
+   on that machine to find it). nginx renders `templates/nginx.conf.template` with
+   this value at startup, so nothing is hardcoded. If the IP ever changes, edit
+   `.env` and re-run `docker compose up -d`.
 
 5. **Open the VPS firewall** for the game ports. If the host runs `ufw`:
    ```bash
