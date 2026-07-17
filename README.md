@@ -48,9 +48,16 @@ tailnet — the real home IP appears nowhere on the VPS.
    startup, so nothing is hardcoded. If the IP ever changes, edit `.env` and re-run
    `docker compose up -d`.
 
-5. **Open the VPS firewall** for the game ports:
-   - `25565/tcp` and `25565/udp` (Java)
-   - `19132/udp` (Bedrock)
+5. **Open the VPS firewall** for the game ports. If the host runs `ufw`:
+   ```bash
+   sudo ufw allow 25565/tcp   # Java
+   sudo ufw allow 25565/udp   # Java
+   sudo ufw allow 19132/udp   # Bedrock
+   sudo ufw reload
+   ```
+   If the VPS sits behind a provider-level firewall (e.g. a DigitalOcean Cloud
+   Firewall), add the same three inbound rules there too, with source
+   **All IPv4 / All IPv6**.
 
 6. **Close the home router port forwards.** Once players can connect through the
    VPS, remove any `25565` / `19132` forwards on the home router — inbound traffic
